@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { Trie } from '../lib/Trie';
+import Trie from '../lib/Trie';
 let completion;
 
 describe('Trie', () => {
