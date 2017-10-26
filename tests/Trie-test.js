@@ -1,5 +1,9 @@
 import { expect } from 'chai';
 import Trie from '../lib/Trie';
+import fs from 'fs'
+
+const text = '/usr/share/dict/words';
+const dictionary = fs.readFileSync(text).toString().trim().split('\n');
 let completion;
 
 describe('Trie', () => {
