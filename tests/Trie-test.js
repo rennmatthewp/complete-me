@@ -127,6 +127,17 @@ describe('Trie', () => {
         'pizzle'
       ]);
     });
+
+    it('should suggest a word with a higher selection frequency before one with a lower suggestions frequency', () => {
+      completion.insert('pie');
+      completion.insert('pizza');
+
+      expect(completion.suggest('pi')).to.deep.equal(['pie', 'pizza']);
+
+      completion.select('pizza');
+
+      expect(completion.suggest('pi')).to.deep.equal(['pizza', 'pie']);
+    });
   });
 
   describe('populate', () => {
@@ -136,7 +147,7 @@ describe('Trie', () => {
 
     it('should populate a dictionary', () => {
       completion.populate(dictionary);
-      expect(completion.count()).to.equal(235886)
+      expect(completion.count()).to.equal(235886);
     });
   });
 
@@ -157,7 +168,6 @@ describe('Trie', () => {
       completion.select('yes');
 
       expect(completion.root.child.y.child.e.child.s.frequency).to.equal(2);
-      completion.select('yes');
     });
   });
 });
