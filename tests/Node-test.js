@@ -12,11 +12,11 @@ describe('Node', () => {
     expect(Node).to.be.a('function');
   });
 
-  it('should have a null letter by default', () => {
+  it('should have a letter property of null by default', () => {
     expect(node.letter).to.equal(null);
   });
 
-  it('should have an empty object as a child by default', () => {
+  it('should have an empty object as a child property by default', () => {
     expect(node.child).to.deep.equal({});
   });
 
