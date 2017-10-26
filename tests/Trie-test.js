@@ -1,9 +1,13 @@
 import { expect } from 'chai';
 import Trie from '../lib/Trie';
-import fs from 'fs'
+import fs from 'fs';
 
 const text = '/usr/share/dict/words';
-const dictionary = fs.readFileSync(text).toString().trim().split('\n');
+const dictionary = fs
+  .readFileSync(text)
+  .toString()
+  .trim()
+  .split('\n');
 
 let completion;
 
@@ -17,7 +21,7 @@ describe('Trie', () => {
   });
 
   it('should have a root node defaulted to null', () => {
-    expect(completion.root).to.equal(null);
+    expect(completion.root.letter).to.equal(null);
   });
 
   it('should have default word count of 0', () => {
@@ -47,10 +51,11 @@ describe('Trie', () => {
 
       completion.insert('dude');
 
-      expect(completion.root.child.d.child.u.child.d.child.e.letter).to.equal('e');
+      expect(completion.root.child.d.child.u.child.d.child.e.letter).to.equal(
+        'e'
+      );
 
       expect(completion.wordCount).to.equal(2);
-
     });
 
     it('should increment the wordCount when a new word is inserted', () => {
@@ -59,13 +64,11 @@ describe('Trie', () => {
       completion.insert('pizza');
       expect(completion.wordCount).to.equal(1);
 
-
       completion.insert('dude');
       expect(completion.wordCount).to.equal(2);
 
       completion.insert('yes');
       expect(completion.wordCount).to.equal(3);
-
     });
 
     it('should not insert the same word twice', () => {
@@ -76,7 +79,6 @@ describe('Trie', () => {
       expect(completion.wordCount).to.equal(1);
     });
   });
-
 
   describe('suggest', () => {
     it('should be a method', () => {
@@ -97,10 +99,21 @@ describe('Trie', () => {
       completion.insert('pizzeria');
       completion.insert('pizzle');
 
-
       expect(completion.suggest('pi')).to.deep.equal([
         'pizza',
         'pizzeria',
+        'pizzle'
+      ]);
+    });
+
+    it('should suggest a word from the dictionary', () => {
+      completion.populate(dictionary);
+      completion.insert('pizz');
+
+      expect(completion.suggest('pizz')).to.deep.equal([
+        'pizza',
+        'pizzeria',
+        'pizzicato',
         'pizzle'
       ]);
     });
@@ -113,6 +126,27 @@ describe('Trie', () => {
 
     it('should populate a dictionary', () => {
       completion.populate(dictionary);
+    });
+  });
+
+  describe('select', () => {
+    it('should be a method', () => {
+      expect(completion.select).to.be.a('function');
+    });
+
+    it('should increment frequency property of the last node of a word when selected', () => {
+      completion.insert('yes');
+      
+      expect(completion.root.child.y.child.e.child.s.frequency).to.equal(0);
+
+      completion.select('yes');
+      
+      expect(completion.root.child.y.child.e.child.s.frequency).to.equal(1);
+
+      completion.select('yes');
+
+      expect(completion.root.child.y.child.e.child.s.frequency).to.equal(2);
+      completion.select('yes');
     });
   });
 });
