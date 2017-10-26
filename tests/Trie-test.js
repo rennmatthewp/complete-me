@@ -29,6 +29,10 @@ describe('Trie', () => {
   });
 
   describe('count', () => {
+    it('should be a method', () => {
+      expect(completion.count).to.be.a('function');
+    });
+
     it('should return the number of words in the Trie', () => {
       expect(completion.count()).to.equal(0);
       completion.insert('pizza');
@@ -128,7 +132,7 @@ describe('Trie', () => {
       ]);
     });
 
-    it('should suggest a word with a higher selection frequency before one with a lower suggestions frequency', () => {
+    it('should suggest words with a higher selection frequency before words with a lower selection frequency', () => {
       completion.insert('pie');
       completion.insert('pizza');
 
