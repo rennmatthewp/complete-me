@@ -25,7 +25,17 @@ describe('Trie', () => {
   });
 
   it('should have default word count of 0', () => {
-    expect(completion.wordCount).to.equal(0);
+    expect(completion.count()).to.equal(0);
+  });
+
+  describe('count', () => {
+    it('should return the number of words in the Trie', () => {
+      expect(completion.count()).to.equal(0);
+      completion.insert('pizza');
+      expect(completion.count()).to.equal(1);
+      completion.insert('pie');
+      expect(completion.count()).to.equal(2);
+    });
   });
 
   describe('insert', () => {
@@ -39,7 +49,7 @@ describe('Trie', () => {
         completion.root.child.p.child.i.child.z.child.z.child.a.wordEnd
       ).to.equal(true);
 
-      expect(completion.wordCount).to.equal(1);
+      expect(completion.count()).to.equal(1);
     });
 
     it('should be able to take in multiple words', () => {
@@ -55,28 +65,28 @@ describe('Trie', () => {
         'e'
       );
 
-      expect(completion.wordCount).to.equal(2);
+      expect(completion.count()).to.equal(2);
     });
 
-    it('should increment the wordCount when a new word is inserted', () => {
-      expect(completion.wordCount).to.equal(0);
+    it('should increment the word count when a new word is inserted', () => {
+      expect(completion.count()).to.equal(0);
 
       completion.insert('pizza');
-      expect(completion.wordCount).to.equal(1);
+      expect(completion.count()).to.equal(1);
 
       completion.insert('dude');
-      expect(completion.wordCount).to.equal(2);
+      expect(completion.count()).to.equal(2);
 
       completion.insert('yes');
-      expect(completion.wordCount).to.equal(3);
+      expect(completion.count()).to.equal(3);
     });
 
     it('should not insert the same word twice', () => {
       completion.insert('pizza');
-      expect(completion.wordCount).to.equal(1);
+      expect(completion.count()).to.equal(1);
 
       completion.insert('pizza');
-      expect(completion.wordCount).to.equal(1);
+      expect(completion.count()).to.equal(1);
     });
   });
 
@@ -126,6 +136,7 @@ describe('Trie', () => {
 
     it('should populate a dictionary', () => {
       completion.populate(dictionary);
+      expect(completion.count()).to.equal(235886)
     });
   });
 
@@ -136,11 +147,11 @@ describe('Trie', () => {
 
     it('should increment frequency property of the last node of a word when selected', () => {
       completion.insert('yes');
-      
+
       expect(completion.root.child.y.child.e.child.s.frequency).to.equal(0);
 
       completion.select('yes');
-      
+
       expect(completion.root.child.y.child.e.child.s.frequency).to.equal(1);
 
       completion.select('yes');
