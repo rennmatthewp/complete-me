@@ -34,6 +34,7 @@ describe('Trie', () => {
       expect(
         completion.root.child.p.child.i.child.z.child.z.child.a.wordEnd
       ).to.equal(true);
+
       expect(completion.wordCount).to.equal(1);
     });
 
@@ -49,6 +50,7 @@ describe('Trie', () => {
       expect(completion.root.child.d.child.u.child.d.child.e.letter).to.equal('e');
 
       expect(completion.wordCount).to.equal(2);
+
     });
 
     it('should increment the wordCount when a new word is inserted', () => {
@@ -57,11 +59,13 @@ describe('Trie', () => {
       completion.insert('pizza');
       expect(completion.wordCount).to.equal(1);
 
+
       completion.insert('dude');
       expect(completion.wordCount).to.equal(2);
 
       completion.insert('yes');
       expect(completion.wordCount).to.equal(3);
+
     });
 
     it('should not insert the same word twice', () => {
@@ -72,6 +76,7 @@ describe('Trie', () => {
       expect(completion.wordCount).to.equal(1);
     });
   });
+
 
   describe('suggest', () => {
     it('should be a method', () => {
@@ -92,6 +97,7 @@ describe('Trie', () => {
       completion.insert('pizzeria');
       completion.insert('pizzle');
 
+
       expect(completion.suggest('pi')).to.deep.equal([
         'pizza',
         'pizzeria',
@@ -107,13 +113,6 @@ describe('Trie', () => {
 
     it('should populate a dictionary', () => {
       completion.populate(dictionary);
-      expect(completion.wordCount).to.equal(235886)
-    })
-  });
-
-  describe('select', () => {
-    it('should be a method', () => {
-      expect(completion.select).to.be.a('function');
     });
   });
 });
