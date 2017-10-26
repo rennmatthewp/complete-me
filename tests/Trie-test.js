@@ -120,7 +120,7 @@ describe('Trie', () => {
       ]);
     });
 
-    it('should suggest a word from the dictionary', (done) => {
+    it('should suggest a word from the dictionary', done => {
       completion.populate(dictionary);
       completion.insert('pizz');
 
