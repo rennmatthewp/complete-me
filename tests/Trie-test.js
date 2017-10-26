@@ -65,9 +65,7 @@ describe('Trie', () => {
 
       completion.insert('dude');
 
-      expect(completion.root.child.d.child.u.child.d.child.e.letter).to.equal(
-        'e'
-      );
+      expect(completion.root.child.d.child.u.child.d.child.e.letter).to.equal('e');
 
       expect(completion.count()).to.equal(2);
     });
