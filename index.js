@@ -1,9 +1,4 @@
-import Trie from './lib/Trie';
+const Trie = require('./lib/Trie.js');
+const Node = require('./lib/Node.js');
 
-
-
-// function filterMe (array) {
-//   return array
-// }
-
-// export default filterMe
+module.exports = { Trie, Node };
