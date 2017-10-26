@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { Trie } from '../lib/Trie';
+import Trie from '../lib/Trie';
 let completion;
 
 describe('Trie', () => {
@@ -42,7 +42,33 @@ describe('Trie', () => {
       completion.insert('pizza');
       expect(completion.wordCount).to.equal(1);
     });
+  });
 
-    
+
+  describe('suggest', () => {
+    it('should be a method', () => {
+      expect(completion.suggest).to.be.a('function');
+    });
+
+    it('should return an array', () => {
+      expect(completion.suggest('')).to.deep.equal([]);
+    });
+
+    it('should suggest a word that has been inserted', () => {
+      completion.insert('pizza');
+      expect(completion.suggest('pi')).to.deep.equal(['pizza']);
+    });
+
+    it('should suggest words that have been inserted', () => {
+      completion.insert('pizza');
+      completion.insert('pizzeria');
+      completion.insert('pizzle');
+
+      expect(completion.suggest('pi')).to.deep.equal([
+        'pizza',
+        'pizzeria',
+        'pizzle'
+      ]);
+    });
   });
 });
