@@ -120,7 +120,7 @@ describe('Trie', () => {
       ]);
     });
 
-    it('should suggest a word from the dictionary', () => {
+    it('should suggest a word from the dictionary', (done) => {
       completion.populate(dictionary);
       completion.insert('pizz');
 
@@ -130,7 +130,8 @@ describe('Trie', () => {
         'pizzicato',
         'pizzle'
       ]);
-    });
+      done();
+    }).timeout(4000);
 
     it('should suggest words with a higher selection frequency before words with a lower selection frequency', () => {
       completion.insert('pie');
