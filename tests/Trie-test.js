@@ -149,7 +149,13 @@ describe('Trie', () => {
       expect(completion.populate).to.be.a('function');
     });
 
-    it('should populate a dictionary', () => {
+    it('should populate trie with an array of words', () => {
+      completion.populate(['pizza', 'dude', 'yes', 'of', 'course']);
+
+      expect(completion.count()).to.equal(5);
+    });
+
+    it('should populate trie with a dictionary', () => {
       completion.populate(dictionary);
       expect(completion.count()).to.equal(235886);
     });
